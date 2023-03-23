@@ -10,11 +10,8 @@ public class Main {
         Queue<Human> queueNam = new LinkedList<>();
         Queue<Human> queueNu = new LinkedList<>();
         try {
-            File file = new File("src/output.txt");
-            file.createNewFile();
-
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             BufferedReader br = new BufferedReader(new FileReader("src/input.txt"));
+
             String line;
             while ((line = br.readLine()) != null) {
                 String[] arr = line.split(",");
@@ -26,8 +23,15 @@ public class Main {
                     queueNu.add(new Human(arr[0], born, sex));
                 }
             }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/output.txt"));
             for (Human human: queueNam
-                 ) {
+            ) {
                 System.out.println(human);
                 bw.write(human.toString());
                 bw.newLine();
@@ -36,8 +40,9 @@ public class Main {
             ) {
                 bw.write(human.toString());
                 bw.newLine();
+                bw.flush();
             }
-        } catch (IOException e) {
+        }catch (IOException e) {
             e.printStackTrace();
         }
     }
